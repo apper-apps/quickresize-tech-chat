@@ -1,0 +1,67 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'react-toastify/dist/ReactToastify.css';
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .drag-overlay {
+    @apply absolute inset-0 bg-primary-500/20 border-2 border-primary-500 border-solid rounded-xl flex items-center justify-center;
+  }
+  
+  .image-preview {
+    @apply max-w-full max-h-96 object-contain rounded-lg shadow-lg bg-white;
+  }
+  
+  .dimension-input {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors duration-200;
+  }
+  
+  .chain-icon {
+    @apply text-gray-400 hover:text-primary-500 cursor-pointer transition-colors duration-200;
+  }
+}
+
+/* Toast Customizations */
+.Toastify__toast-container {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.Toastify__toast {
+  @apply rounded-lg shadow-xl;
+  min-height: 48px;
+  font-size: 14px;
+}
+
+.Toastify__toast--success {
+  @apply bg-gradient-to-r from-emerald-500 to-emerald-600 text-white;
+}
+
+.Toastify__toast--error {
+  @apply bg-gradient-to-r from-red-500 to-red-600 text-white;
+}
+
+.Toastify__toast--info {
+  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white;
+}
+
+.Toastify__progress-bar--success {
+  @apply bg-emerald-200;
+}
+
+.Toastify__progress-bar--error {
+  @apply bg-red-200;
+}
+
+.Toastify__progress-bar--info {
+  @apply bg-blue-200;
+}
