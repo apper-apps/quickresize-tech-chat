@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useSelector } from 'react-redux';
 import ImageUploader from "@/components/organisms/ImageUploader";
 import ImageProcessor from "@/components/organisms/ImageProcessor";
 import ApperIcon from "@/components/ApperIcon";
+import { AuthContext } from "../../App";
+import Button from "@/components/atoms/Button";
 
-const Home = () => {
+function Home() {
   const [imageData, setImageData] = useState(null);
   const [error, setError] = useState(null);
+  const { logout } = useContext(AuthContext);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
 
-  const handleImageUpload = (data) => {
+const handleImageUpload = (data) => {
     setImageData(data);
     setError(null);
   };
@@ -20,6 +25,58 @@ const Home = () => {
   const handleClearError = () => {
     setError(null);
   };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Header with Authentication Info */}
+      <div className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+                <ApperIcon name="Image" className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">QuickResize</h1>
+                <p className="text-sm text-gray-500">Fast Image Resizing Tool</p>
+              </div>
+            </div>
+            
+            {isAuthenticated && (
+              <div className="flex items-center space-x-6">
+                <div className="text-right">
+                  <div className="text-sm font-medium text-gray-900">
+                    {user?.firstName} {user?.lastName}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {user?.emailAddress}
+                  </div>
+                  {user?.accounts?.[0]?.companyName && (
+                    <div className="text-xs text-gray-500">
+                      {user.accounts[0].companyName}
+                    </div>
+                  )}
+                </div>
+                <Button
+                  onClick={logout}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center space-x-2"
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4" />
+                  <span>Logout</span>
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
@@ -42,7 +99,7 @@ const Home = () => {
 
         {/* Main Content */}
         <div className="space-y-8">
-          {!imageData ? (
+{!imageData ? (
             <ImageUploader
               onImageUpload={handleImageUpload}
               imageData={imageData}
@@ -63,6 +120,13 @@ const Home = () => {
               />
             </>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Home;
         </div>
 
         {/* Features */}
