@@ -31,6 +31,50 @@
   }
 }
 
+@layer components {
+  .resize-handle {
+    @apply absolute bg-primary-500 border-2 border-white shadow-lg rounded-sm opacity-80 hover:opacity-100 transition-opacity duration-200 z-10;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .resize-handle-nw {
+    @apply -top-1 -left-1 cursor-nw-resize;
+  }
+  
+  .resize-handle-ne {
+    @apply -top-1 -right-1 cursor-ne-resize;
+  }
+  
+  .resize-handle-sw {
+    @apply -bottom-1 -left-1 cursor-sw-resize;
+  }
+  
+  .resize-handle-se {
+    @apply -bottom-1 -right-1 cursor-se-resize;
+  }
+  
+  .resize-handle-n {
+    @apply -top-1 left-1/2 -translate-x-1/2 cursor-n-resize;
+  }
+  
+  .resize-handle-s {
+    @apply -bottom-1 left-1/2 -translate-x-1/2 cursor-s-resize;
+  }
+  
+  .resize-handle-e {
+    @apply top-1/2 -right-1 -translate-y-1/2 cursor-e-resize;
+  }
+  
+  .resize-handle-w {
+    @apply top-1/2 -left-1 -translate-y-1/2 cursor-w-resize;
+  }
+  
+  .resize-handle:hover {
+    @apply bg-primary-600 scale-110;
+  }
+}
+
 /* Toast Customizations */
 .Toastify__toast-container {
   font-family: 'Inter', system-ui, sans-serif;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DimensionInput from "@/components/molecules/DimensionInput";
 import FormatSelector from "@/components/molecules/FormatSelector";
+import ResizableImagePreview from "@/components/molecules/ResizableImagePreview";
 import Button from "@/components/atoms/Button";
 import Loading from "@/components/ui/Loading";
 import ApperIcon from "@/components/ApperIcon";
@@ -25,19 +26,24 @@ const ImageProcessor = ({ imageData, onReset }) => {
     }
   }, [imageData]);
 
-  const handleWidthChange = (newWidth) => {
-    setWidth(newWidth);
-    if (aspectRatioLocked && newWidth > 0) {
-      setHeight(Math.round(newWidth / originalAspectRatio));
-    }
-  };
+const handleWidthChange = (newWidth) => {
+  setWidth(newWidth);
+  if (aspectRatioLocked && newWidth > 0) {
+    setHeight(Math.round(newWidth / originalAspectRatio));
+  }
+};
 
-  const handleHeightChange = (newHeight) => {
-    setHeight(newHeight);
-    if (aspectRatioLocked && newHeight > 0) {
-      setWidth(Math.round(newHeight * originalAspectRatio));
-    }
-  };
+const handleHeightChange = (newHeight) => {
+  setHeight(newHeight);
+  if (aspectRatioLocked && newHeight > 0) {
+    setWidth(Math.round(newHeight * originalAspectRatio));
+  }
+};
+
+const handleDimensionChange = (newWidth, newHeight) => {
+  setWidth(newWidth);
+  setHeight(newHeight);
+};
 
   const handleToggleAspectRatio = () => {
     setAspectRatioLocked(!aspectRatioLocked);
@@ -185,19 +191,24 @@ const ImageProcessor = ({ imageData, onReset }) => {
       {resizedImageUrl && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
           <div className="text-center">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">Resized Image</h3>
-            <img
+<h3 className="text-xl font-bold text-gray-900 mb-6">Resized Image</h3>
+          <div className="flex justify-center mb-6">
+            <ResizableImagePreview
               src={resizedImageUrl}
               alt="Resized"
-              className="image-preview mx-auto mb-6"
-              style={{ maxHeight: "400px" }}
+              width={width}
+              height={height}
+              onDimensionChange={handleDimensionChange}
+              aspectRatioLocked={aspectRatioLocked}
+              className="mx-auto"
             />
-            <div className="flex items-center justify-center space-x-6 text-sm text-gray-600 mb-6">
-              <div className="flex items-center">
-                <ApperIcon name="Image" className="w-4 h-4 mr-2 text-success-500" />
-                <span>{width} × {height} px</span>
-              </div>
+          </div>
+          <div className="flex items-center justify-center space-x-6 text-sm text-gray-600 mb-6">
+            <div className="flex items-center">
+              <ApperIcon name="Image" className="w-4 h-4 mr-2 text-success-500" />
+              <span>{width} × {height} px</span>
             </div>
+          </div>
             <Button
               onClick={downloadImage}
               variant="success"
